@@ -1,0 +1,36 @@
+﻿.background {
+    background-color: light-dark(var(--mantine-color-gray-1), var(--mantine-color-gray-7));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--mantine-spacing-md);
+    max-width: 400px;
+    width: 100%;
+}
+
+.logoWrap {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: var(--mantine-spacing-md);
+}
+
+.logo {
+    max-width: 300px;
+}
+
+.title {
+    text-align: center;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--mantine-spacing-md);
+}

@@ -1,0 +1,21 @@
+{
+  "name": "react-study",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:server": "yarn workspace server run dev",
+    "dev:client": "yarn workspace client run dev",
+    "dev": "concurrently \"yarn dev:server\" \"yarn dev:client\"",
+    "build": "yarn workspaces run build",
+    "test": "yarn workspaces run test"
+  },
+  "dependencies": {
+    "concurrently": "^9.1.0"
+  }
+}
