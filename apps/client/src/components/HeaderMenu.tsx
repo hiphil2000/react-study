@@ -1,13 +1,13 @@
 ﻿import {useState} from "react";
-import {Burger, Container, Group, Title} from '@mantine/core';
-import { useDisclosure } from '@mantine/hooks';
-import classes from './HeaderMenu.module.css';
+import {Burger, Container, Group, Title} from "@mantine/core";
+import { useDisclosure } from "@mantine/hooks";
+import classes from "./HeaderMenu.module.css";
 
 const links = [
-    { link: '/about', label: 'Features' },
-    { link: '/pricing', label: 'Pricing' },
-    { link: '/learn', label: 'Learn' },
-    { link: '/community', label: 'Community' },
+    { link: "/about", label: "Features" },
+    { link: "/pricing", label: "Pricing" },
+    { link: "/learn", label: "Learn" },
+    { link: "/community", label: "Community" },
 ];
 
 export function HeaderMenu() {

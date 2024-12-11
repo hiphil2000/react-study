@@ -1,5 +1,5 @@
 ﻿import * as React from "react";
-import classes from './MainLayout.module.css';
+import classes from "./MainLayout.module.css";
 import {HeaderMenu} from "./HeaderMenu.tsx";
 import {Container} from "@mantine/core";
 

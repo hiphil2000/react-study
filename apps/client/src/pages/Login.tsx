@@ -1,4 +1,4 @@
-﻿import classes from './Login.module.css';
+﻿import classes from "./Login.module.css";
 import logoSrc from "/Logo.png?url";
 import {TextInput, PasswordInput, Checkbox, Button, Card, Image, Title} from "@mantine/core";
 import {useForm} from "@mantine/form";

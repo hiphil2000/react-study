@@ -15,7 +15,7 @@ const useUserStore = create<UserState>()(
                 setUser: (empNo) => set(() => ({ empNo: empNo }))
             }),
             {
-                name: 'user-storage',
+                name: "user-storage",
             },
         )
     )

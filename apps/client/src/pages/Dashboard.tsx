@@ -15,7 +15,7 @@ import {
 } from "@mantine/core";
 import {Calendar} from "@mantine/dates";
 import {IconExternalLink, IconInfoCircle, IconBellRingingFilled, IconPinned} from "@tabler/icons-react";
-import classes from './Dashboard.module.css';
+import classes from "./Dashboard.module.css";
 import ReportCard from "../components/ReportCard.tsx";
 
 
@@ -120,8 +120,8 @@ export default function Dashboard() {
                         <SummaryCard title="캘린더" href="/calendar">
                             <Center>
                                 <Calendar firstDayOfWeek={0}
-                                          monthLabelFormat={(date) => date.toLocaleDateString('ko-KR', {year: 'numeric', month: 'long'})}
-                                          weekdayFormat={(date) => date.toLocaleDateString('ko-KR', {weekday: 'short'})}
+                                          monthLabelFormat={(date) => date.toLocaleDateString("ko-KR", {year: "numeric", month: "long"})}
+                                          weekdayFormat={(date) => date.toLocaleDateString("ko-KR", {weekday: "short"})}
                                 />
                             </Center>
                         </SummaryCard>
