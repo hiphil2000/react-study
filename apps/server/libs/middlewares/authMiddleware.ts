@@ -4,7 +4,7 @@ import "dotenv/config";
 
 const JWT_SECRET = process.env.JWT_SECRET!;
 
-export const authenticateToken: RequestHandler = (req: Request, res: Response, next: NextFunction) => {
+export const AuthenticateToken: RequestHandler = (req: Request, res: Response, next: NextFunction) => {
     try {
         const token = req.headers.authorization!.split(" ")[1];
         req._decoded = JWT.verify(token, JWT_SECRET);

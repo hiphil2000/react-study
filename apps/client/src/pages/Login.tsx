@@ -2,13 +2,9 @@
 import logoSrc from "/Logo.png?url";
 import {TextInput, PasswordInput, Checkbox, Button, Card, Image, Title} from "@mantine/core";
 import {useForm} from "@mantine/form";
-import {useDisclosure} from "@mantine/hooks";
 import {useNavigate} from "react-router-dom";
-
-const userData = {
-    id: "test",
-    pw: "test"
-}
+import {useLogin} from "../libs/hooks";
+import {RSAEncrypt} from "../libs/crpyto";
 
 export default function Login() {
     const form = useForm({
@@ -19,7 +15,8 @@ export default function Login() {
             autoLogin: false,
         }
     });
-    const [loading, {open: startLoading, close: endLoading}] = useDisclosure();
+    const {mutate: login, status} = useLogin();
+
     const navigate = useNavigate();
     const handleSubmit = form.onSubmit((values, event) => {
         // submit 되어버리는 것 방지
@@ -27,24 +24,18 @@ export default function Login() {
 
         // 폼 초기화 및 로딩
         form.clearErrors();
-        startLoading();
 
-        // 테스트 로그인 로직, 이후 API로 변경
-        const testInterval = setInterval(() => {
-            clearInterval(testInterval);
-            console.log(values);
+        login({
+            userId: values.id,
+            password: RSAEncrypt(values.pw)
+        });
 
-            // 로그인 로직, 성공 시 홈으로 이동
-            if (values.id !== userData.id || values.pw !== userData.pw) {
-                const msg = "아이디 또는 비밀번호가 다릅니다.";
-                form.setErrors({"id": msg, "pw": msg});
-            } else {
-                navigate("/");
-            }
-
-            endLoading();
-        }, 1000);
-
+        if (status === "success") {
+            navigate("/");
+        } else {
+            const msg = "아이디 또는 비밀번호가 다릅니다.";
+            form.setErrors({"id": msg, "pw": msg});
+        }
     });
 
     return (
@@ -67,7 +58,7 @@ export default function Login() {
                               key={form.key("autoLogin")}
                               {...form.getInputProps("autoLogin", {type: "checkbox"})}
                     />
-                    <Button type="submit" loading={loading}>Login</Button>
+                    <Button type="submit" loading={status === "pending"}>Login</Button>
                 </form>
             </Card>
         </div>
