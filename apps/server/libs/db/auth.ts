@@ -1,4 +1,4 @@
-﻿import { ExecuteProcedure } from "./dbUtils";
+﻿import {ExecuteProcedure, Query} from "./dbUtils";
 
 export async function IMSLogin(username: string, password: string) {
     const params = {
@@ -7,4 +7,19 @@ export async function IMSLogin(username: string, password: string) {
     };
 
     return await ExecuteProcedure<any>("uSP_LOGIN_SELECT", params);
+}
+
+export async function UserSelect(userId: string) {
+    const params = {
+        UserID: userId
+    };
+
+    return await Query(`
+        SELECT  EmpNo
+            ,   UserID
+            ,   UserName
+            ,   DeptID
+        FROM    TB_User
+        WHERE   UserId  = @UserID
+    `, params);
 }

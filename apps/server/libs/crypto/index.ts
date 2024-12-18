@@ -1,7 +1,8 @@
 ﻿import path from 'path';
 import * as forge from "node-forge";
-const fs = require('fs').promises;
 import "dotenv/config";
+
+const fs = require('fs').promises;
 
 const DES_KEY = process.env.DES_KEY!.split(',').map(Number);
 const DES_IV = process.env.DES_IV!.split(',').map(Number);
@@ -37,10 +38,7 @@ export function TripleDESCBCEncrypt(data: string): string {
         cipher.finish();
 
         // 암호화된 데이터를 Base64로 인코딩
-        const encryptedBase64 = forge.util.encode64(cipher.output.getBytes());
-        console.log('Encrypted Data (Base64):', encryptedBase64);
-
-        return encryptedBase64;
+        return forge.util.encode64(cipher.output.getBytes());
     } catch (err) {
         console.error('Encryption Error:', (err as Error).message);
         throw err;

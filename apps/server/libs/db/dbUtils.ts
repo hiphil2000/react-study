@@ -5,24 +5,28 @@ const CONNECTION_STRING = process.env.CONNECTION_STRING!;
 
 export async function ExecuteProcedure<T extends any>(name: string, params: any) {
     const conn = await mssql.connect(CONNECTION_STRING);
-    const result = conn.request();
+    const request = conn.request();
 
     for (const key in params) {
-        result.input(key, params[key]);
+        request.input(key, params[key]);
     }
 
-    const response = await result.execute<T>(name);
-
+    const result = await request.execute<T>(name);
     await conn.close();
 
-    return response;
+    return result;
 }
 
-export async function Query(query: string) {
+export async function Query(query: string, params: any) {
     const conn = await mssql.connect(CONNECTION_STRING);
-    const result = await conn.request().query(query);
+    const request = conn.request();
 
+    for (const key in params) {
+        request.input(key, params[key]);
+    }
+
+    const result = await request.query(query);
     await conn.close();
 
-    return result.recordset;
+    return result;
 }

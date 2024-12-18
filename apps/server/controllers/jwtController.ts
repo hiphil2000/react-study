@@ -1,6 +1,6 @@
 ﻿import {NextFunction, Request, Response} from "express";
 import jwt from "jsonwebtoken";
-import {IMSLogin} from "../libs/db/auth";
+import {IMSLogin, UserSelect} from "../libs/db/auth";
 import {RSADecrypt, TripleDESCBCEncrypt} from "../libs/crypto";
 import dayjs from "dayjs";
 import "dotenv/config";
@@ -19,7 +19,7 @@ export async function Login(req: Request, res: Response, next: NextFunction) {
     }
 
     if (success) {
-        const payload = { username: userId };
+        const payload = { userId: userId };
         const token = jwt.sign(payload, JWT_SECRET, { expiresIn: JWT_EXPIRES_IN });
         const response = {
             time: dayjs(),
@@ -41,12 +41,28 @@ export async function Login(req: Request, res: Response, next: NextFunction) {
     next();
 }
 
-export function Me(req: Request, res: Response, next: NextFunction) {
-    const response = {
-        time: dayjs(),
-        success: true
+export async function Me(req: Request, res: Response, next: NextFunction) {
+    const token = req._decoded;
+    const result = await UserSelect(token.userId);
+
+    if (result.recordset.length > 0) {
+        const user = result.recordset[0];
+        const response = {
+            time: dayjs(),
+            success: true,
+            user: user
+        }
+
+        res.status(200).json(response);
+    } else {
+        const response = {
+            time: dayjs(),
+            success: false,
+            message: "User not found"
+        }
+
+        res.status(404).json(response);
     }
 
-    res.status(200).json(response);
     next();
 }

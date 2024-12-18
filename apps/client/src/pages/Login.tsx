@@ -5,6 +5,7 @@ import {useForm} from "@mantine/form";
 import {useNavigate} from "react-router-dom";
 import {useLogin} from "../libs/hooks";
 import {RSAEncrypt} from "../libs/crpyto";
+import {useEffect} from "react";
 
 export default function Login() {
     const form = useForm({
@@ -15,7 +16,23 @@ export default function Login() {
             autoLogin: false,
         }
     });
-    const {mutate: login, status} = useLogin();
+
+    const {mutate: login, status, user} = useLogin({
+        onSuccess: () => {
+            navigate("/");
+        },
+        onError: () => {
+            const msg = "아이디 또는 비밀번호가 다릅니다.";
+            form.setErrors({"id": msg, "pw": msg});
+        }
+    });
+
+    useEffect(() => {
+        console.log(user);
+        if (user !== null) {
+            navigate("/");
+        }
+    }, []);
 
     const navigate = useNavigate();
     const handleSubmit = form.onSubmit((values, event) => {
@@ -29,13 +46,6 @@ export default function Login() {
             userId: values.id,
             password: RSAEncrypt(values.pw)
         });
-
-        if (status === "success") {
-            navigate("/");
-        } else {
-            const msg = "아이디 또는 비밀번호가 다릅니다.";
-            form.setErrors({"id": msg, "pw": msg});
-        }
     });
 
     return (
